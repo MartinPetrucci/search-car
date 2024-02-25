@@ -46,8 +46,13 @@ export default function SearchBar({
 
   async function searchCars() {
     const queryString = getQueryString();
+    // const BASE_URL = process.env.BASE_URL;
+    const BASE_URL = "https://search-car-xi.vercel.app/";
+    // const res = await fetch(
+    //   `http://localhost:3000/api/search?${queryString}car=${query}&offset=${offset}`
+    // );
     const res = await fetch(
-      `http://localhost:3000/api/search?${queryString}car=${query}&offset=${offset}`
+      `${BASE_URL}api/search?${queryString}car=${query}&offset=${offset}`
     );
     const data = (await res.json()) as SearchResponse;
     console.log("filters", data.available_filters);
