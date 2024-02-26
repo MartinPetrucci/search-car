@@ -1,8 +1,6 @@
 import { ML_BASE_URL, MLAuth } from "@/utils/meli";
 import { NextResponse } from "next/server";
 
-global.accessToken = null;
-
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
@@ -24,10 +22,5 @@ export async function GET(request: Request) {
   };
   const res = await fetch(url, req);
   const data = await res.json();
-  if (data.access_token) {
-    global.access_token = data.access_token;
-    return NextResponse.json({ msg: "OK" });
-  } else {
-    return NextResponse.json({ msg: "error" });
-  }
+  return NextResponse.json(data);
 }
