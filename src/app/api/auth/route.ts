@@ -1,12 +1,13 @@
-import { SearchResponse } from "@/interfaces";
 import { ML_BASE_URL, MLAuth } from "@/utils/meli";
 import { NextResponse } from "next/server";
+
+global.accessToken = null;
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
   const url = new URL(`${ML_BASE_URL}/oauth/token`);
-  const res = await fetch(url, {
+  const req = {
     method: "POST",
     headers: {
       ...MLAuth,
@@ -19,11 +20,14 @@ export async function GET(request: Request) {
       client_secret: "jlAMArxyPTlL4kQpSw9kxiNnF8a5T6JC",
       redirect_uri: "https://search-car-xi.vercel.app/",
       code: code,
-      // code_verifier: "12345",
     }),
-  });
+  };
+  const res = await fetch(url, req);
   const data = await res.json();
-  console.log({ data });
-  return NextResponse.json({ ...data, receivedCode: code });
-  // return NextResponse.json({ msg: "ok" });
+  if (data.access_token) {
+    global.access_token = data.access_token;
+    return NextResponse.json({ msg: "OK" });
+  } else {
+    return NextResponse.json({ msg: "error" });
+  }
 }
