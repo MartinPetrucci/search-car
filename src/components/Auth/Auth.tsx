@@ -3,8 +3,10 @@
 import { BASE_URL } from "@/utils/meli";
 import { sha256 } from "js-sha256";
 import { usePathname, useParams, useSearchParams } from "next/navigation";
-
+import { useAuth } from "@/store/authContext";
 export default function Auth() {
+  const { state, dispatch } = useAuth();
+
   let code: string | null = "";
   const searchParams = useSearchParams();
   code = searchParams.get("code");
@@ -17,10 +19,11 @@ export default function Auth() {
     const res = await fetch(`${BASE_URL}/api/auth?&code=${code}`);
     const data = await res.json();
     console.log({ data });
+    if (data.access_token) {
+      dispatch({ type: "SET_TOKEN", payload: data.access_token });
+    }
   }
 
-  // const hash = sha256("12345");
-  // const url = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=7523285884318227&redirect_uri=https://search-car-xi.vercel.app/&code_challenge=${hash}&code_challenge_method=S256`;
   const url = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=7523285884318227&redirect_uri=https://search-car-xi.vercel.app/`;
   return (
     <div>

@@ -2,6 +2,7 @@
 "use client";
 
 import { AvFilter, Car, CarResult, SearchResponse } from "@/interfaces";
+import { useAuth } from "@/store/authContext";
 import { formatCar } from "@/utils/format";
 import { Button, TextField } from "@mui/material";
 import {
@@ -25,15 +26,18 @@ export default function SearchBar({
     [k: string]: FormDataEntryValue;
   };
 }) {
+  const { state } = useAuth();
+
   const [query, setQuery] = useState<string>("");
   const [offset, setOffset] = useState(0);
   // const [filters, setFilters] = useState<AvFilter[]>([]);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    setCars([]);
-    setOffset(0);
-    getCars();
+    console.log("token from component", state.accessToken);
+    // setCars([]);
+    // setOffset(0);
+    // getCars();
   };
 
   function getQueryString() {
