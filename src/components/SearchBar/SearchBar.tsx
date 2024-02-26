@@ -34,10 +34,10 @@ export default function SearchBar({
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    console.log("token from component", state.accessToken);
-    // setCars([]);
-    // setOffset(0);
-    // getCars();
+    // console.log("token from component", state.accessToken);
+    setCars([]);
+    setOffset(0);
+    getCars();
   };
 
   function getQueryString() {
@@ -57,7 +57,7 @@ export default function SearchBar({
     //   `http://localhost:3000/api/search?${queryString}car=${query}&offset=${offset}`
     // );
     const res = await fetch(
-      `${BASE_URL}api/search?${queryString}car=${query}&offset=${offset}`
+      `${BASE_URL}api/search?${queryString}car=${query}&offset=${offset}&token=${state.accessToken}`
     );
     const data = (await res.json()) as SearchResponse;
     console.log("filters", data.available_filters);
