@@ -19,8 +19,9 @@ export default function Auth() {
     console.log({ data });
   }
 
-  const hash = sha256("12345");
-  const url = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=7523285884318227&redirect_uri=https://search-car-xi.vercel.app/&code_challenge=${hash}&code_challenge_method=S256`;
+  // const hash = sha256("12345");
+  // const url = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=7523285884318227&redirect_uri=https://search-car-xi.vercel.app/&code_challenge=${hash}&code_challenge_method=S256`;
+  const url = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=7523285884318227&redirect_uri=https://search-car-xi.vercel.app/`;
   return (
     <div>
       <p>code: {code}</p>

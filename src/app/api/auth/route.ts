@@ -19,7 +19,7 @@ export async function GET(request: Request) {
       client_secret: "jlAMArxyPTlL4kQpSw9kxiNnF8a5T6JC",
       redirect_uri: "https://search-car-xi.vercel.app/",
       code: code,
-      code_verifier: "12345",
+      // code_verifier: "12345",
     }),
   });
   const data = await res.json();
