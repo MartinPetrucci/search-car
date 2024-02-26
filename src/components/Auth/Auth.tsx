@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@mui/material";
 import { usePathname, useParams, useSearchParams } from "next/navigation";
 
 export default function Auth() {
