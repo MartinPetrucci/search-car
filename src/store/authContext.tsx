@@ -1,4 +1,5 @@
 // store/authContext.tsx
+"use client";
 
 import {
   createContext,
