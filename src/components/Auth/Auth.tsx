@@ -24,7 +24,7 @@ export default function Auth() {
       {code ? (
         <span>is authenticated</span>
       ) : (
-        <a href="https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=7523285884318227&redirect_uri=https://search-car-xi.vercel.app/">
+        <a href="https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=7523285884318227&redirect_uri=https://search-car-xi.vercel.app/&code_challenge=12345&code_challenge_method=plain">
           auth
         </a>
       )}
