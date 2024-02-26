@@ -1,10 +1,22 @@
 "use client";
 
+import { BASE_URL } from "@/utils/meli";
 import { usePathname, useParams, useSearchParams } from "next/navigation";
 
 export default function Auth() {
+  let code: string | null = "";
   const searchParams = useSearchParams();
-  const code = searchParams.get("code");
+  code = searchParams.get("code");
+
+  if (code) {
+    getAuth();
+  }
+
+  async function getAuth() {
+    const res = await fetch(`${BASE_URL}/api/auth?&code=${code}`);
+    const data = await res.json();
+    console.log({ data });
+  }
 
   return (
     <div>
