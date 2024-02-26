@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const code = searchParams.get("code}");
+  const code = searchParams.get("code");
   const url = new URL(`${ML_BASE_URL}/oauth/token`);
   const res = await fetch(url, {
     method: "POST",
@@ -24,6 +24,6 @@ export async function GET(request: Request) {
   });
   const data = await res.json();
   console.log({ data });
-  return NextResponse.json(data);
+  return NextResponse.json({ ...data, receivedCode: code });
   // return NextResponse.json({ msg: "ok" });
 }
