@@ -39,7 +39,7 @@ export default function Chart({ cars }: { cars: Car[] }) {
           }}
         />
         <Scatter
-          data={cars.map((car) => ({ x: car.kms, y: car.price, ...car }))}
+          data={cars?.map((car) => ({ x: car.kms, y: car.price, ...car }))}
           fill="#8884d8"
           onClick={(e) => {
             console.log(e);
@@ -58,24 +58,21 @@ function CarTooltip({ point }: { point: Payload<ValueType, NameType> }) {
   return (
     <div>
       {car && (
-        <div
-          style={{
-            // height: "250px",
-            height: "fit-content",
-            width: "200px",
-            outline: "1px solid grey",
-            padding: "1rem",
-            display: "flex",
-            flexDirection: "column",
-            background: "white",
-            alignItems: "center",
-          }}
-        >
-          <Image src={car.thumbnail} alt="car" width={284} height={214} />
-          <span>{car?.title}</span>
-          <span>ARS${car.price}</span>
-          <span>{car.kms} kms</span>
-          <span>{car.year}</span>
+        <div className="flex flex-col items-center bg-white rounded-md h-fit w-48 shadow-md pt-2">
+          <Image
+            src={car.thumbnail}
+            alt="car"
+            width={284}
+            height={214}
+            className="shadow-md"
+          />
+          <div className="flex flex-col p-3  w-full gap-2 text-center">
+            {/* <span className="font-medium overflow-hidden">{car?.title}</span> */}
+            <span className="text-center text-lg">ARS${car.price}</span>
+            <span>{car.kms} kms</span>
+            <span>{car.year}</span>
+            {/* <div className="flex justify-between"></div> */}
+          </div>
         </div>
       )}
     </div>

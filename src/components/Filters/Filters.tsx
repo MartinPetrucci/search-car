@@ -55,7 +55,7 @@ export default function Filters({
             <Button type="submit" variant="outlined">
               aplicar
             </Button>
-            {filters.map((filter) => (
+            {filters?.map((filter) => (
               <FormControl key={filter.id}>
                 <FormLabel id="demo-row-radio-buttons-group-label">
                   {filter.name}
@@ -65,7 +65,7 @@ export default function Filters({
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   name="row-radio-buttons-group"
                 >
-                  {filter.values.map((value) => (
+                  {filter.values?.map((value) => (
                     <FormControlLabel
                       name={filter.id}
                       key={value.id}
