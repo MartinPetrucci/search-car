@@ -17,15 +17,15 @@ import {
 export default function SearchBar({
   amount,
   setCars,
-  setFilters,
-  queryFilter,
-}: {
+}: // setFilters,
+// queryFilter,
+{
   amount: number;
   setCars: Dispatch<SetStateAction<Car[]>>;
-  setFilters: Dispatch<SetStateAction<AvFilter[]>>;
-  queryFilter: {
-    [k: string]: FormDataEntryValue;
-  };
+  // setFilters: Dispatch<SetStateAction<AvFilter[]>>;
+  // queryFilter: {
+  //   [k: string]: FormDataEntryValue;
+  // };
 }) {
   // const { state } = useAuth();
 
@@ -41,18 +41,18 @@ export default function SearchBar({
     getCars();
   };
 
-  function getQueryString() {
-    let queryString = "";
-    for (const key in queryFilter) {
-      queryString = queryString.concat(`${key}=${queryFilter[key]}&`);
-    }
-    return queryString;
-  }
+  // function getQueryString() {
+  //   let queryString = "";
+  //   for (const key in queryFilter) {
+  //     queryString = queryString.concat(`${key}=${queryFilter[key]}&`);
+  //   }
+  //   return queryString;
+  // }
 
   async function searchCars() {
-    const queryString = getQueryString();
+    // const queryString = getQueryString();
     const res = await fetch(
-      `${BASE_URL}api/search?${queryString}car=${query}&offset=${offset}`
+      `${BASE_URL}api/search?car=${query}&offset=${offset}`
     );
     const data = (await res.json()) as SearchResponse;
     return data;
@@ -66,7 +66,7 @@ export default function SearchBar({
     if (response.paging.total > amount) {
       setOffset((prev) => prev + 50);
     } else {
-      setFilters(response.available_filters);
+      // setFilters(response.available_filters);
     }
   }
 
@@ -89,17 +89,6 @@ export default function SearchBar({
         <Button type="submit" variant="outlined">
           Search
         </Button>
-        {/* <Button
-          type="button"
-          variant="outlined"
-          onClick={() => {
-            setOffset(0);
-            setQuery("");
-            setCars([]);
-          }}
-        >
-          BORRAR
-        </Button> */}
       </form>
     </div>
   );
