@@ -4,6 +4,7 @@
 import { AvFilter, Car, CarResult, SearchResponse } from "@/interfaces";
 import { useAuth } from "@/store/authContext";
 import { formatCar } from "@/utils/format";
+import { BASE_URL } from "@/utils/meli";
 import { Button, TextField } from "@mui/material";
 import {
   Dispatch,
@@ -26,7 +27,7 @@ export default function SearchBar({
     [k: string]: FormDataEntryValue;
   };
 }) {
-  const { state } = useAuth();
+  // const { state } = useAuth();
 
   const [query, setQuery] = useState<string>("");
   const [offset, setOffset] = useState(0);
@@ -50,17 +51,10 @@ export default function SearchBar({
 
   async function searchCars() {
     const queryString = getQueryString();
-    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-    console.log({ BASE_URL });
-    // const BASE_URL = "https://search-car-xi.vercel.app/";
-    // const res = await fetch(
-    //   `http://localhost:3000/api/search?${queryString}car=${query}&offset=${offset}`
-    // );
     const res = await fetch(
-      `${BASE_URL}api/search?${queryString}car=${query}&offset=${offset}&token=${state.accessToken}`
+      `${BASE_URL}api/search?${queryString}car=${query}&offset=${offset}`
     );
     const data = (await res.json()) as SearchResponse;
-    console.log("filters", data.available_filters);
     return data;
   }
 
