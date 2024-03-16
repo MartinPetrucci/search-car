@@ -11,7 +11,7 @@ export function formatCar(input: CarResult): Car {
   const [power] = getAttribute(input, "POWER").split(" ");
   const year = getAttribute(input, "VEHICLE_YEAR");
 
-  const dollarQuote = 1080;
+  const dollarQuote = 1020;
   const price =
     input.currency_id == "ARS" ? input.price : input.price * dollarQuote;
 
