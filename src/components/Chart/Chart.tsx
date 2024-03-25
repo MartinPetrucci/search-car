@@ -9,6 +9,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 import {
   NameType,
@@ -16,7 +17,14 @@ import {
   ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
 
-export default function Chart({ cars }: { cars: Car[] }) {
+export interface CarDataset {
+  model: string;
+  cars: Car[];
+}
+
+// export default function Chart({ cars }: { cars: Car[] }) {
+export default function Chart({ carDatasets }: { carDatasets: CarDataset[] }) {
+  const colors = ["#FA7070", "#2C7865", "#401F71", "#008DDA", "#FCDC2A"];
   return (
     <ResponsiveContainer width="100%" height={800} style={{ padding: "2rem" }}>
       <ScatterChart
@@ -27,10 +35,10 @@ export default function Chart({ cars }: { cars: Car[] }) {
           left: 20,
         }}
       >
+        <Legend />
         <CartesianGrid />
         <XAxis type="number" dataKey="x" name="Kms" unit="km" />
         <YAxis type="number" dataKey="y" name="Precio" unit="ARS$" />
-        {/* <Tooltip content={(c) => <>{JSON.stringify(c.payload[0])}</>} /> */}
         <Tooltip
           content={({ payload }) => {
             if (payload) {
@@ -38,16 +46,23 @@ export default function Chart({ cars }: { cars: Car[] }) {
             }
           }}
         />
-        <Scatter
-          data={cars?.map((car) => ({ x: car.kms, y: car.price, ...car }))}
-          fill="#8884d8"
-          onClick={(e) => {
-            console.log(e);
-            const car: Car = e.payload;
-            // console.log({ car });
-            window.open(car.link, "_blank");
-          }}
-        />
+        {carDatasets?.map((carDataset, index) => (
+          <Scatter
+            key={carDataset.model}
+            name={`${carDataset.model} (${carDataset.cars.length})`}
+            fill={colors[index]}
+            data={carDataset.cars.map((car) => ({
+              x: car.kms,
+              y: car.price,
+              ...car,
+            }))}
+            onClick={(e) => {
+              console.log(e);
+              const car: Car = e.payload;
+              window.open(car.link, "_blank");
+            }}
+          />
+        ))}
       </ScatterChart>
     </ResponsiveContainer>
   );

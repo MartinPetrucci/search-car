@@ -13,15 +13,18 @@ import {
   useEffect,
   useState,
 } from "react";
+import { CarDataset } from "../Chart/Chart";
 
 export default function SearchBar({
   amount,
   setCars,
+  setCarDatasets,
 }: // setFilters,
 // queryFilter,
 {
   amount: number;
   setCars: Dispatch<SetStateAction<Car[]>>;
+  setCarDatasets: Dispatch<SetStateAction<CarDataset[]>>;
   // setFilters: Dispatch<SetStateAction<AvFilter[]>>;
   // queryFilter: {
   //   [k: string]: FormDataEntryValue;
@@ -37,6 +40,7 @@ export default function SearchBar({
     e.preventDefault();
     // console.log("token from component", state.accessToken);
     setCars([]);
+    // setCarDataset((prev) => ({ ...prev, cars: [] }));
     setOffset(0);
     getCars();
   };
@@ -61,12 +65,37 @@ export default function SearchBar({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   async function getCars() {
     const response = await searchCars();
-    const cars = response.results.map((result) => formatCar(result));
-    setCars((prev) => [...prev, ...cars]);
-    if (response.paging.total > amount) {
-      setOffset((prev) => prev + 50);
-    } else {
-      // setFilters(response.available_filters);
+    const resultCars = response.results?.map((result) => formatCar(result));
+    if (resultCars.length > 0) {
+      setCars((prev) => [...prev, ...resultCars]);
+      setCarDatasets((prev) => {
+        if (offset == 0) {
+          return [...prev, { model: query, cars: resultCars }];
+        }
+        return prev.map((d) => {
+          if (d.model == query) {
+            return { model: query, cars: [...d.cars, ...resultCars] };
+          }
+          return d;
+        });
+        // const desireDataset = prev.find((d) => d.model == query);
+        // if (desireDataset) {
+        //   return [
+        //     ...prev,
+        //     { ...desireDataset, cars: [...desireDataset.cars, ...resultCars] },
+        //   ];
+        // }
+        // return prev;
+      });
+      // setCarDataset((prev) => ({
+      //   model: query,
+      //   cars: [...prev.cars, ...resultCars],
+      // }));
+      if (response.paging.total > amount) {
+        setOffset((prev) => prev + 50);
+      } else {
+        // setFilters(response.available_filters);
+      }
     }
   }
 
