@@ -9,13 +9,21 @@ import {
   useEffect,
   useState,
 } from "react";
+import { CarDataset } from "../Chart/Chart";
 
 interface Props {
-  originalCars: Car[];
-  setCars: Dispatch<SetStateAction<Car[]>>;
+  // originalCars: Car[];
+  originalCarDatasets: CarDataset[];
+  // setCars: Dispatch<SetStateAction<Car[]>>;
+  setCarDatasets: Dispatch<SetStateAction<CarDataset[]>>;
 }
 
-export default function RangeFilter({ originalCars, setCars }: Props) {
+export default function RangeFilter({
+  // originalCars,
+  originalCarDatasets,
+  // setCars,
+  setCarDatasets,
+}: Props) {
   const [activeFilters, setActiveFilters] = useState<
     { fn: (car: Car, value: number) => boolean; val: number }[]
   >([]);
@@ -38,18 +46,22 @@ export default function RangeFilter({ originalCars, setCars }: Props) {
   };
 
   useEffect(() => {
-    console.log({ activeFilters });
-    setCars(() => {
-      if (originalCars.length > 0) {
-        return originalCars.filter((car) => {
-          return activeFilters.every((activeFilter) =>
-            activeFilter.fn(car, activeFilter.val)
-          );
+    console.log("cambio el original");
+    setCarDatasets(() => {
+      if (originalCarDatasets.length > 0 && activeFilters.length > 0) {
+        return originalCarDatasets?.map((dataSet) => {
+          const filteredCars = dataSet.cars.filter((car) => {
+            return activeFilters.every((activeFilter) =>
+              activeFilter.fn(car, activeFilter.val)
+            );
+          });
+          return { model: dataSet.model, cars: filteredCars };
         });
       }
-      return originalCars;
+      console.log("no entro");
+      return originalCarDatasets;
     });
-  }, [activeFilters, setCars, originalCars]);
+  }, [activeFilters, setCarDatasets, originalCarDatasets]);
 
   const filters: {
     [k: string]: { filterFn: (car: Car, value: number) => boolean };

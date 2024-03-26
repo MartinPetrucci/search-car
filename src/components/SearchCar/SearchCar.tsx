@@ -14,20 +14,8 @@ export interface Filter {
 
 export default function SearchCar() {
   const [carDatasets, setCarDatasets] = useState<CarDataset[]>([]);
-  const [carDataset, setCarDataset] = useState<CarDataset>({
-    cars: [],
-    model: "",
-  });
-  const [cars, setCars] = useState<Car[]>([]);
-  const [filteredCars, setFilteredCars] = useState<Car[]>(cars);
-  function openAll() {
-    filteredCars
-      .slice(0, 20)
-      .sort((a, b) => a.price - b.price)
-      .forEach((car) => {
-        window.open(car.link, "_blank");
-      });
-  }
+  const [filteredCarDataset, setFilteredCarDataset] =
+    useState<CarDataset[]>(carDatasets);
 
   function removeDataSet(model: string) {
     setCarDatasets((prev) => {
@@ -39,21 +27,14 @@ export default function SearchCar() {
       <div className="flex flex-col gap-2 items-center justify-between m-auto w-5/12">
         <div className="flex justify-between items-end w-full">
           <SearchBar
+            carDatasets={carDatasets}
             setCarDatasets={setCarDatasets}
-            setCars={setCars}
-            amount={cars.length}
           />
-          {/* {cars.length > 0 && (
-            <Button
-              className="text-center text-lg font-medium cursor-pointer h-full"
-              onClick={openAll}
-              variant="outlined"
-            >
-              {filteredCars.length} resultados
-            </Button>
-          )} */}
         </div>
-        {/* <RangeFilter setCars={setFilteredCars} originalCars={cars} /> */}
+        <RangeFilter
+          setCarDatasets={setFilteredCarDataset}
+          originalCarDatasets={carDatasets}
+        />
       </div>
       <div>
         {carDatasets.map((dataSet) => (
@@ -69,10 +50,7 @@ export default function SearchCar() {
         ))}
       </div>
       <div className="flex flex-col gap-2 items-center">
-        <Chart
-          // cars={filteredCars}
-          carDatasets={carDatasets}
-        />
+        <Chart carDatasets={filteredCarDataset} />
       </div>
     </div>
   );
