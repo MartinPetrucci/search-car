@@ -75,9 +75,10 @@ export default function SearchBar({
   }, [offset]);
 
   return (
-    <div>
+    <div className="w-full">
       <form onSubmit={handleSubmit} className="flex gap-2">
         <TextField
+          className="w-full"
           type="text"
           value={query}
           onChange={(e) => {

@@ -5,7 +5,7 @@ import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col p-12 gap-4">
+    <main className="flex min-h-screen flex-col py-4 gap-4">
       <SearchCar />
     </main>
   );

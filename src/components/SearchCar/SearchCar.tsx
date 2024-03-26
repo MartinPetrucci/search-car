@@ -23,8 +23,8 @@ export default function SearchCar() {
     });
   }
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-col gap-2 items-center justify-between m-auto w-5/12">
+    <div className="flex flex-col p-4 gap-4">
+      <div className="flex flex-col gap-2 items-center justify-between m-auto">
         <div className="flex justify-between items-end w-full">
           <SearchBar
             carDatasets={carDatasets}
@@ -36,7 +36,7 @@ export default function SearchCar() {
           originalCarDatasets={carDatasets}
         />
       </div>
-      <div>
+      <div className="flex gap-4">
         {carDatasets.map((dataSet) => (
           <Button
             key={dataSet.model}

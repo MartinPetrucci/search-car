@@ -26,19 +26,25 @@ export interface CarDataset {
 export default function Chart({ carDatasets }: { carDatasets: CarDataset[] }) {
   const colors = ["#FA7070", "#2C7865", "#401F71", "#008DDA", "#FCDC2A"];
   return (
-    <ResponsiveContainer width="100%" height={800} style={{ padding: "2rem" }}>
+    <ResponsiveContainer
+      width="100%"
+      height={800}
+      style={{ fontSize: ".75rem", padding: "1rem" }}
+    >
       <ScatterChart
-        margin={{
-          top: 20,
-          right: 20,
-          bottom: 20,
-          left: 20,
-        }}
+      // margin={{
+      //   top: 20,
+      //   right: 20,
+      //   bottom: 20,
+      //   left: 20,
+      // }}
       >
         <Legend />
         <CartesianGrid />
-        <XAxis type="number" dataKey="x" name="Kms" unit="km" />
-        <YAxis type="number" dataKey="y" name="Precio" unit="ARS$" />
+        {/* <XAxis type="number" dataKey="x" name="Kms" unit="km" />
+        <YAxis type="number" dataKey="y" name="Precio" unit="ARS$" /> */}
+        <XAxis type="number" dataKey="x" name="Precio" unit="ARS$" />
+        <YAxis type="number" dataKey="y" name="Kms" unit="km" />
         <Tooltip
           content={({ payload }) => {
             if (payload) {
@@ -52,8 +58,8 @@ export default function Chart({ carDatasets }: { carDatasets: CarDataset[] }) {
             name={`${carDataset.model} (${carDataset.cars.length})`}
             fill={colors[index]}
             data={carDataset.cars.map((car) => ({
-              x: car.kms,
-              y: car.price,
+              x: car.price,
+              y: car.kms,
               ...car,
             }))}
             onClick={(e) => {
