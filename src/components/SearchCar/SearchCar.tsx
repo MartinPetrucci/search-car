@@ -7,7 +7,7 @@ import Chart, { CarDataset } from "../Chart/Chart";
 import Filters from "../Filters/Filters";
 import RangeFilter from "../RangeFilter/RangeFilter";
 import { Button } from "@mui/material";
-import { BASE_URL } from "@/utils/meli";
+import { P_BACKEND_URL } from "@/utils/meli";
 
 export interface Filter {
   filterFn: (car: Car) => boolean;
@@ -25,8 +25,7 @@ export default function SearchCar() {
   }
 
   async function send() {
-    const b = "http://localhost:3000/";
-    const res = await fetch(`${b}api/fav-cars`, {
+    const res = await fetch(`${P_BACKEND_URL}api/fav-cars`, {
       method: "POST",
       body: JSON.stringify({
         model: "208 gt",

@@ -17,6 +17,7 @@ import {
   ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
 import { CarTooltip } from "../CarTooltip/CarTooltip";
+import { BACKEND_URL, P_BACKEND_URL } from "@/utils/meli";
 
 export interface CarDataset {
   model: string;
@@ -26,9 +27,7 @@ export interface CarDataset {
 // export default function Chart({ cars }: { cars: Car[] }) {
 export default function Chart({ carDatasets }: { carDatasets: CarDataset[] }) {
   async function addToFav(car: Car) {
-    // const { title, price, kms, link } = car;
-    const b = "http://localhost:3000/";
-    const res = await fetch(`${b}api/fav-cars`, {
+    const res = await fetch(`${P_BACKEND_URL}/api/fav-cars`, {
       method: "POST",
       body: JSON.stringify(car),
     });

@@ -4,7 +4,7 @@
 import { AvFilter, Car, CarResult, SearchResponse } from "@/interfaces";
 import { useAuth } from "@/store/authContext";
 import { formatCar } from "@/utils/format";
-import { BASE_URL } from "@/utils/meli";
+import { BACKEND_URL, P_BACKEND_URL } from "@/utils/meli";
 import { Button, CircularProgress, TextField } from "@mui/material";
 import {
   Dispatch,
@@ -39,7 +39,7 @@ export default function SearchBar({
 
   async function searchCars() {
     const res = await fetch(
-      `${BASE_URL}api/search?car=${query}&offset=${offset}`
+      `${P_BACKEND_URL}/api/search?car=${query}&offset=${offset}`
     );
     const data = (await res.json()) as SearchResponse;
     return data;
