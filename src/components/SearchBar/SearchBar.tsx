@@ -5,7 +5,7 @@ import { AvFilter, Car, CarResult, SearchResponse } from "@/interfaces";
 import { useAuth } from "@/store/authContext";
 import { formatCar } from "@/utils/format";
 import { BASE_URL } from "@/utils/meli";
-import { Button, TextField } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
 import {
   Dispatch,
   FormEventHandler,

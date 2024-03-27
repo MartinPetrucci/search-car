@@ -16,6 +16,7 @@ import {
   Payload,
   ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
+import { CarTooltip } from "../CarTooltip/CarTooltip";
 
 export interface CarDataset {
   model: string;
@@ -24,6 +25,17 @@ export interface CarDataset {
 
 // export default function Chart({ cars }: { cars: Car[] }) {
 export default function Chart({ carDatasets }: { carDatasets: CarDataset[] }) {
+  async function addToFav(car: Car) {
+    // const { title, price, kms, link } = car;
+    const b = "http://localhost:3000/";
+    const res = await fetch(`${b}api/fav-cars`, {
+      method: "POST",
+      body: JSON.stringify(car),
+    });
+    const data = await res.json();
+    console.log({ data });
+  }
+
   const colors = ["#FA7070", "#2C7865", "#401F71", "#008DDA", "#FCDC2A"];
   return (
     <ResponsiveContainer
@@ -47,8 +59,9 @@ export default function Chart({ carDatasets }: { carDatasets: CarDataset[] }) {
         <YAxis type="number" dataKey="y" name="Kms" unit="km" />
         <Tooltip
           content={({ payload }) => {
-            if (payload) {
-              return <>{<CarTooltip point={payload[0]} />}</>;
+            if (payload && payload[0]) {
+              const car: Car = payload[0].payload;
+              return <>{<CarTooltip car={car} />}</>;
             }
           }}
         />
@@ -65,7 +78,8 @@ export default function Chart({ carDatasets }: { carDatasets: CarDataset[] }) {
             onClick={(e) => {
               console.log(e);
               const car: Car = e.payload;
-              window.open(car.link, "_blank");
+              addToFav(car);
+              // window.open(car.link, "_blank");
             }}
           />
         ))}
@@ -74,28 +88,4 @@ export default function Chart({ carDatasets }: { carDatasets: CarDataset[] }) {
   );
 }
 // function CarTooltip({ point }: { point: { name: string; unit: string } }) {
-function CarTooltip({ point }: { point: Payload<ValueType, NameType> }) {
-  const car: Car = point?.payload;
-  return (
-    <div>
-      {car && (
-        <div className="flex flex-col items-center bg-white rounded-md h-fit w-48 shadow-md pt-2">
-          <Image
-            src={car.thumbnail}
-            alt="car"
-            width={284}
-            height={214}
-            className="shadow-md"
-          />
-          <div className="flex flex-col p-3  w-full gap-2 text-center">
-            {/* <span className="font-medium overflow-hidden">{car?.title}</span> */}
-            <span className="text-center text-lg">ARS${car.price}</span>
-            <span>{car.kms} kms</span>
-            <span>{car.year}</span>
-            {/* <div className="flex justify-between"></div> */}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+// function CarTooltip({ point }: { point: Payload<ValueType, NameType> }) {

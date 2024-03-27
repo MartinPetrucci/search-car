@@ -1,6 +1,8 @@
 import Auth from "@/components/Auth/Auth";
 import SearchCar from "@/components/SearchCar/SearchCar";
 import { AuthProvider } from "@/store/authContext";
+import { BASE_URL } from "@/utils/meli";
+import { Button } from "@mui/material";
 import { Suspense } from "react";
 
 export default function Home() {
