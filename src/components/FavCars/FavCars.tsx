@@ -11,9 +11,21 @@ export default function FavCars() {
     <div>
       {isLoading && <CircularProgress />}
       {favCars && favCars.length > 0 && (
-        <div className="grid grid-flow-row">
+        <div
+          className="grid  gap-4 p-4"
+          style={{
+            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 4fr)",
+          }}
+        >
           {favCars.map((car) => (
-            <CarTooltip key={car.id} car={car} />
+            <div
+              key={car.id}
+              onClick={() => {
+                window.open(car.link, "_blank");
+              }}
+            >
+              <CarTooltip car={car} />
+            </div>
           ))}
         </div>
       )}

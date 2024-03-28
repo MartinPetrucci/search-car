@@ -24,24 +24,8 @@ export default function SearchCar() {
     });
   }
 
-  async function send() {
-    const res = await fetch(`${P_BACKEND_URL}api/fav-cars`, {
-      method: "POST",
-      body: JSON.stringify({
-        model: "208 gt",
-        price: 123,
-        kms: 1111,
-        link: "http://123.com",
-      }),
-    });
-    const data = await res.json();
-    console.log({ data });
-  }
-
   return (
     <div className="flex flex-col p-4 gap-4">
-      <Button onClick={send}>send</Button>
-
       <div className="flex flex-col gap-2 items-center justify-between m-auto">
         <div className="flex justify-between items-end w-full">
           <SearchBar
