@@ -49,9 +49,11 @@ async function fetchAllResults(
   const res = await fetch(url.toString());
   const data = (await res.json()) as APIResponse;
 
-  allData.push(...data.results); // Accumulate results
+  if (data && data.results) {
+    allData.push(...data.results); // Accumulate results
+  }
 
-  if (allData.length < data.paging.total) {
+  if (allData.length < data?.paging?.total && offset < data?.paging?.total) {
     return fetchAllResults(coordinates, category, offset + 50, allData);
   }
   const dollarQuote = 1290;
