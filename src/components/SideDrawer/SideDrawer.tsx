@@ -2,7 +2,6 @@
 
 import { Car } from "@/interfaces";
 import { Box, Button, Drawer } from "@mui/material";
-import { CarTooltip } from "../CarTooltip/CarTooltip";
 import Image from "next/image";
 import { P_BACKEND_URL } from "@/utils/meli";
 interface Props {
