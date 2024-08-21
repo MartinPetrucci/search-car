@@ -1,22 +1,62 @@
 import { ML_BASE_URL, MLAuth } from "@/utils/meli";
 import { NextResponse } from "next/server";
 
+interface Properties {
+  propertyType: string;
+  categoryID: string;
+  results: PropertyDTO[];
+}
+
 // https://developers.mercadolibre.com.ar/es_ar/localiza-inmuebles
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const searchParams = url.searchParams;
   const maxPrice = searchParams.get("maxPrice");
   const minSpace = searchParams.get("minSpace");
-  const alquilerCategory = "MLA1473";
+  const alquilerDeptoCategory = "MLA1473";
+  const alquilerHouseCategory = "MLA1467";
+  const alquilerPHCategory = "MLA105181";
+
+  const properties: Properties[] = [
+    {
+      propertyType: "Casa",
+      categoryID: alquilerHouseCategory,
+      results: [],
+    },
+    {
+      propertyType: "Departamento",
+      categoryID: alquilerDeptoCategory,
+      results: [],
+    },
+    {
+      propertyType: "PH",
+      categoryID: alquilerPHCategory,
+      results: [],
+    },
+  ];
+
   const triunviratoYBeiro = "-34.58144677298442, -58.47429658096765";
   const lopeDeVegaYBeiro = "-34.61386385326509, -58.5251418750388";
   const coordinates = getCoordinates(lopeDeVegaYBeiro, triunviratoYBeiro);
-  const allResults = await fetchAllResults(
+  const houseResults = await fetchAllResults(
     coordinates,
-    alquilerCategory,
+    alquilerHouseCategory,
     0,
     []
   );
+  const deptoResults = await fetchAllResults(
+    coordinates,
+    alquilerDeptoCategory,
+    0,
+    []
+  );
+  const phResults = await fetchAllResults(
+    coordinates,
+    alquilerPHCategory,
+    0,
+    []
+  );
+  const allResults = [...houseResults, ...deptoResults, ...phResults];
   if (!maxPrice) {
     return NextResponse.json(allResults);
   }
@@ -39,13 +79,13 @@ async function fetchAllResults(
   coordinates: string,
   category: string,
   offset: number,
-  allData: Result[]
-): Promise<Result[]> {
+  allData: PropertyDTO[]
+): Promise<PropertyDTO[]> {
   const url = new URL(`${ML_BASE_URL}/sites/MLA/search`);
   url.searchParams.append("category", category);
   url.searchParams.append("item_location", coordinates);
   url.searchParams.append("offset", offset.toString());
-
+  console.log(`fetching ${url.toString}`);
   const res = await fetch(url.toString());
   const data = (await res.json()) as APIResponse;
 
@@ -72,7 +112,7 @@ async function fetchAllResults(
   });
 }
 
-function getCoordinates(p1: string, p2: string): string {
+export function getCoordinates(p1: string, p2: string): string {
   const [lat1, lon1] = p1.split(", ");
   const [lat2, lon2] = p2.split(", ");
   return `lat:${lat1}_${lat2},lon:${lon1}_${lon2}`;
