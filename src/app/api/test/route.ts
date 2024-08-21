@@ -1,5 +1,5 @@
+import { getCoordinates } from "@/app/backend/mapper/rent";
 import { ML_BASE_URL } from "@/utils/meli";
-import { getCoordinates } from "../house/route";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
