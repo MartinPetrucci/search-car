@@ -1,3 +1,4 @@
+import { getCoordinates } from "@/app/backend/mapper/rent";
 import { ML_BASE_URL, MLAuth } from "@/utils/meli";
 import { NextResponse } from "next/server";
 
@@ -110,10 +111,4 @@ async function fetchAllResults(
       pricePerSquareMeter: Number.parseFloat(relation.toFixed(2)),
     };
   });
-}
-
-export function getCoordinates(p1: string, p2: string): string {
-  const [lat1, lon1] = p1.split(", ");
-  const [lat2, lon2] = p2.split(", ");
-  return `lat:${lat1}_${lat2},lon:${lon1}_${lon2}`;
 }

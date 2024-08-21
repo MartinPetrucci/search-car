@@ -2,9 +2,8 @@ import {
   getAllRentProperties,
   getPropertiesByType,
 } from "@/app/backend/service/rent";
-import { getCoordinates } from "../house/route";
 import { NextResponse } from "next/server";
-import { DTOtoEntity } from "@/app/backend/mapper/rent";
+import { DTOtoEntity, getCoordinates } from "@/app/backend/mapper/rent";
 
 const triunviratoYBeiro = "-34.58144677298442, -58.47429658096765";
 const lopeDeVegaYBeiro = "-34.61386385326509, -58.5251418750388";

@@ -32,6 +32,12 @@ export function DTOtoEntity(dto: PropertyDTO): Property {
   return property;
 }
 
+export function getCoordinates(p1: string, p2: string): string {
+  const [lat1, lon1] = p1.split(", ");
+  const [lat2, lon2] = p2.split(", ");
+  return `lat:${lat1}_${lat2},lon:${lon1}_${lon2}`;
+}
+
 function getAttribute(
   attributes: Attribute[],
   attributeID: string
