@@ -20,8 +20,6 @@ import { CarTooltip } from "../CarTooltip/CarTooltip";
 import { BACKEND_URL, P_BACKEND_URL } from "@/utils/meli";
 import { useState } from "react";
 import SideDrawer from "../SideDrawer/SideDrawer";
-import { Property } from "../SearchHouse/SearchHouse";
-import { Properties } from "@/app/backend/service/rent";
 
 export interface HouseDataset {
   neighborhood: string;
